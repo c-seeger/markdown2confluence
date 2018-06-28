@@ -8,6 +8,7 @@ is a markdown to [Confluence](https://www.atlassian.com/software/confluence) xht
 - xhtml fixed for confluence
 - additional syntax via markdown comments to use macros
 -- jira macro implemented
+-- confluence page macro implemented
 
 ## not yet supportet
 - attachments, comments, picture upload + xhtml code generation
