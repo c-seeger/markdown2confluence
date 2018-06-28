@@ -1,6 +1,6 @@
 # Markdown test file
 
-If you see this file as its markdown representation then you should click on Raw !
+HINT: *If you see this file as its markdown representation then you should click on Raw !*
 
 Jira macro using markdown comments: 
 
