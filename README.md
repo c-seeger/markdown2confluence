@@ -1,6 +1,8 @@
 # markdown2confluence
 
-is a markdown to [Confluence](https://www.atlassian.com/software/confluence) xhtml converter library using [mark](https://github.com/a8m/mark) library 
+is a markdown to [Confluence](https://www.atlassian.com/software/confluence) xhtml converter library using [mark](https://github.com/a8m/mark) library
+
+The implementation is just a markdown parser with some markdown comment syntax to add macro support.
 
 ## Supportet Features
 
@@ -41,11 +43,7 @@ import (
 
 func main() {
 
-  // multiline markdown
-  markdown := `# some markdown
-- [md2conf](https://github.com/cseeger-epages/markdown2confluence)
-## jira macro using markdown comment
-[//]: "jira:JIRA-1234"`
+  markdown := "#some markdown"
 
   // Render xhtml
   xhtml, err := md2conf.Render(markdown)
@@ -61,6 +59,20 @@ func main() {
 ### Advanced examples
 
 see [examples](https://github.com/cseeger-epages/markdown2confluence/tree/master/examples) for some more usage examples
+
+basic macro support using the following syntax
+
+#### Jira issue macro 
+```
+[//]: "jira:<issue-key>"
+e.g. [//]: "jira:JIRA-1234"
+```
+
+#### confluence page links
+```
+[//]: "confluence:<page-title>"
+e.g. [//]: "confluence:some page title"
+```
 
 ## Code Documentation
 
