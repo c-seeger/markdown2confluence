@@ -82,8 +82,12 @@ e.g. [//]: "confluence:some page title"
 e.g: [//]: "toc:3:list:false"
 ```
 
+[markdown2confluence](https://github.com/cseeger-epages/markdown2confluence) can also be used in combination with [confluence-go-api](https://github.com/cseeger-epages/confluence-go-api) see [confluence example](https://github.com/cseeger-epages/markdown2confluence/blob/master/examples/confluence.go)
+
 ## Code Documentation
 
 You find the full [code documentation here](https://godoc.org/github.com/cseeger-epages/markdown2confluence).
 
 The Confluence Storage Format documentation [can be found here](https://confluence.atlassian.com/doc/confluence-storage-format-790796544.html).
+
+Macro definitions can be found [here](https://confluence.pnac.org/display/DOC/Confluence+Storage+Format+for+Macros#ConfluenceStorageFormatforMacros-TableofContentsmacro)
