@@ -3,6 +3,7 @@ package md2conf
 import (
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/a8m/mark"
@@ -10,23 +11,43 @@ import (
 
 // Render creates confluence xhtml code from markdown
 func Render(markdown string) (string, error) {
-	macroed, err := jiraMacro(markdown)
+	macroed, err := applyMacros(markdown)
 	if err != nil {
 		return "", err
 	}
 
-	macroed, err = confluencePageMacro(macroed)
-	if err != nil {
-		return "", err
-	}
+	m := mark.New(macroed, nil)
+	// header overwrite to support confluence ToC
+	m.AddRenderFn(mark.NodeHeading, func(node mark.Node) string {
+		h, _ := node.(*mark.HeadingNode)
+		return headerOverwrite(h)
+	})
 
-	xhtml := mark.Render(macroed)
+	xhtml := m.Render()
 	xhtml = strings.Replace(xhtml, "<hr>", "<hr />", -1)
 	return xhtml, nil
 
 }
 
+// applyMacros to apply Macros
+func applyMacros(markdown string) (string, error) {
+	macroed, err := jiraMacro(markdown)
+	if err != nil {
+		return "", err
+	}
+	macroed, err = confluencePageMacro(macroed)
+	if err != nil {
+		return "", err
+	}
+	macroed, err = tableOfContentsMacro(macroed)
+	if err != nil {
+		return "", err
+	}
+	return macroed, nil
+}
+
 // jiraMacro creates jira macro xhtml code
+// https://confluence.atlassian.com/conf59/jira-issues-macro-792499129.html
 func jiraMacro(html string) (string, error) {
 	re := regexp.MustCompile(`\[//\]: "jira:(?P<GM>.*)"`)
 	if !re.MatchString(html) {
@@ -52,6 +73,7 @@ func jiraMacro(html string) (string, error) {
 	return html, nil
 }
 
+// confluencePageMacro adds page links to other confluence pages
 func confluencePageMacro(html string) (string, error) {
 	re := regexp.MustCompile(`\[//\]: "confluence:(?P<GM>.*)"`)
 	if !re.MatchString(html) {
@@ -74,4 +96,56 @@ func confluencePageMacro(html string) (string, error) {
 	}
 
 	return html, nil
+}
+
+// tableOfContentsMacro adds confluence ToC
+// https://confluence.pnac.org/display/DOC/Confluence+Storage+Format+for+Macros#ConfluenceStorageFormatforMacros-TableofContentsmacro
+func tableOfContentsMacro(html string) (string, error) {
+	re := regexp.MustCompile(`\[//\]: "toc:(?P<GM>.*)"`)
+	if !re.MatchString(html) {
+		return html, nil
+	}
+
+	macroTemplate := `
+<ac:macro ac:name="toc">
+	<ac:parameter ac:name="printable">true</ac:parameter>
+	<ac:parameter ac:name="style">square</ac:parameter>
+	<ac:parameter ac:name="maxLevel">###LEVEL###</ac:parameter>
+	<ac:parameter ac:name="indent">5px</ac:parameter>
+	<ac:parameter ac:name="minLevel">1</ac:parameter>
+	<ac:parameter ac:name="class">bigpink</ac:parameter>
+	<ac:parameter ac:name="exclude">[1//2]</ac:parameter>
+	<ac:parameter ac:name="type">###TYPE###</ac:parameter>
+	<ac:parameter ac:name="outline">###OUTLINE###</ac:parameter>
+	<ac:parameter ac:name="include">.*</ac:parameter>
+</ac:macro>`
+
+	list := re.FindAllString(html, -1)
+	for _, v := range list {
+		data := strings.Split(v, ":")
+		if len(data) < 5 {
+			return "", fmt.Errorf("TABLE OF CONTENS MACRO ERROR: not enough arguments")
+		}
+		tocMacro := strings.Replace(macroTemplate, "###LEVEL###", data[2], 1)
+		tocMacro = strings.Replace(tocMacro, "###TYPE###", data[3], 1)
+		tocMacro = strings.Replace(tocMacro, "###OUTLINE###", data[4][:len(data[3])-1], 1)
+		html = strings.Replace(html, v, tocMacro, 1)
+	}
+
+	return html, nil
+}
+
+// headerOverwrite is used to overwrite the standard mark HeadingNode function to
+// add <a name"<text>"></a> for supporting confluence ToC
+func headerOverwrite(n *mark.HeadingNode) (s string) {
+	for _, node := range n.Nodes {
+		s += node.Render()
+	}
+
+	re := regexp.MustCompile(`[^\w]+`)
+	id := re.ReplaceAllString(n.Text, "-")
+	// ToLowerCase
+	id = strings.ToLower(id)
+	return fmt.Sprintf("<%[1]s id=\"%s\"><a name=\"%s\"></a>%s</%[1]s>", "h"+strconv.Itoa(n.Level), id, s, s)
+
 }

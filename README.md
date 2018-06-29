@@ -11,6 +11,7 @@ The implementation is just a markdown parser with some markdown comment syntax t
 - additional syntax via markdown comments to use macros
 -- jira macro implemented
 -- confluence page macro implemented
+-- table of contents macro
 
 ## not yet supportet
 - attachments, comments, picture upload + xhtml code generation
@@ -72,6 +73,13 @@ e.g. [//]: "jira:JIRA-1234"
 ```
 [//]: "confluence:<page-title>"
 e.g. [//]: "confluence:some page title"
+```
+
+### ToC macro
+
+```
+[//]: "toc:<max-level>:<type>:<outlined(true/false)>"
+e.g: [//]: "toc:3:list:false"
 ```
 
 ## Code Documentation
