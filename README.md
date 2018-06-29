@@ -9,9 +9,9 @@ The implementation is just a markdown parser with some markdown comment syntax t
 - markdown 2 xhtml
 - xhtml fixed for confluence
 - additional syntax via markdown comments to use macros
--- jira macro implemented
--- confluence page macro implemented
--- table of contents macro
+  - jira macro implemented
+  - confluence page macro implemented
+  - table of contents macro
 
 ## not yet supported
 - attachments, comments, picture upload + xhtml code generation
