@@ -13,7 +13,7 @@ The implementation is just a markdown parser with some markdown comment syntax t
 -- confluence page macro implemented
 -- table of contents macro
 
-## not yet supportet
+## not yet supported
 - attachments, comments, picture upload + xhtml code generation
 
 If you miss some feature implementation, feel free to open an issue or send pull requests. I will take look as soon as possible.
@@ -86,8 +86,6 @@ e.g: [//]: "toc:3:list:false"
 
 ## Code Documentation
 
-You find the full [code documentation here](https://godoc.org/github.com/cseeger-epages/markdown2confluence).
-
-The Confluence Storage Format documentation [can be found here](https://confluence.atlassian.com/doc/confluence-storage-format-790796544.html).
-
-Macro definitions can be found [here](https://confluence.pnac.org/display/DOC/Confluence+Storage+Format+for+Macros#ConfluenceStorageFormatforMacros-TableofContentsmacro)
+- [Code documentation](https://godoc.org/github.com/cseeger-epages/markdown2confluence).
+- [Confluence Storage Format](https://confluence.atlassian.com/doc/confluence-storage-format-790796544.html).
+- [Macro definitions](https://confluence.pnac.org/display/DOC/Confluence+Storage+Format+for+Macros#ConfluenceStorageFormatforMacros-TableofContentsmacro)
