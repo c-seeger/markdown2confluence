@@ -24,6 +24,9 @@ func Render(markdown string) (string, error) {
 
 	// hr fix
 	xhtml = strings.Replace(xhtml, "<hr>", "<hr />", -1)
+	// underscore fix
+	xhtml = strings.Replace(xhtml, "<em>", " ", -1)
+	xhtml = strings.Replace(xhtml, "</em>", " ", -1)
 
 	return xhtml, nil
 
