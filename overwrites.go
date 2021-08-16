@@ -9,13 +9,20 @@ import (
 	"github.com/a8m/mark"
 )
 
-// headerOverwrite is used to overwrite the standard mark HeadingNode function to
+// headerOverwriteParagraph is used to overwrite the standard mark ParagraphNode function to
 // add <a name"<text>"></a> for supporting confluence ToC
-func headerOverwrite(n *mark.HeadingNode) (s string) {
-	for _, node := range n.Nodes {
+func headerOverwriteParagraph(node mark.Node) (s string) {
+	p, _ := node.(*mark.ParagraphNode)
+	for _, node := range p.Nodes {
 		s += node.Render()
 	}
+	return s
+}
 
+// headerOverwriteHeading is used to overwrite the standard mark HeadingNode function to
+// add <a name"<text>"></a> for supporting confluence ToC
+func headerOverwriteHeading(node mark.Node) (s string) {
+	n, _ := node.(*mark.HeadingNode)
 	re := regexp.MustCompile(`[^\w]+`)
 	id := re.ReplaceAllString(n.Text, "-")
 	// ToLowerCase

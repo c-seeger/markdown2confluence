@@ -5,8 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/cseeger-epages/confluence-go-api"
-	"github.com/cseeger-epages/markdown2confluence"
+	"github.com/c-seeger/markdown2confluence"
 )
 
 func main() {

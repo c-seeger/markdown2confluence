@@ -4,6 +4,8 @@ is a markdown to [Confluence](https://www.atlassian.com/software/confluence) xht
 
 The implementation is just a markdown parser with some markdown comment syntax to add macro support.
 
+> !!! Currently untested !!!
+
 ## Supportet Features
 
 - markdown 2 xhtml
@@ -23,7 +25,7 @@ If you miss some feature implementation, feel free to open an issue or send pull
 If you already installed GO on your system and configured it properly than its simply:
 
 ```
-go get github.com/cseeger-epages/markdown2confluence
+go get github.com/c-seeger/markdown2confluence
 ```
 
 If not follow [these instructions](https://nats.io/documentation/tutorials/go-install/).
@@ -39,7 +41,7 @@ import (
         "fmt"
         "log"
 
-        "github.com/cseeger-epages/markdown2confluence"
+        "github.com/c-seeger/markdown2confluence"
 )
 
 func main() {
@@ -59,7 +61,7 @@ func main() {
 
 ### Advanced examples
 
-see [examples](https://github.com/cseeger-epages/markdown2confluence/tree/master/examples) for some more usage examples
+see [examples](https://github.com/c-seeger/markdown2confluence/tree/master/examples) for some more usage examples
 
 basic macro support using the following syntax
 
@@ -82,10 +84,10 @@ e.g. [//]: "confluence:some page title"
 e.g: [//]: "toc:3:list:false"
 ```
 
-[markdown2confluence](https://github.com/cseeger-epages/markdown2confluence) can also be used in combination with [confluence-go-api](https://github.com/cseeger-epages/confluence-go-api) see [confluence example](https://github.com/cseeger-epages/markdown2confluence/blob/master/examples/confluence.go)
+[markdown2confluence](https://github.com/c-seeger/markdown2confluence) can also be used in combination with [confluence-go-api](https://github.com/c-seeger/confluence-go-api) see [confluence example](https://github.com/c-seeger/markdown2confluence/blob/master/examples/confluence.go)
 
 ## Code Documentation
 
-- [Code documentation](https://godoc.org/github.com/cseeger-epages/markdown2confluence).
+- [Code documentation](https://godoc.org/github.com/c-seeger/markdown2confluence).
 - [Confluence Storage Format](https://confluence.atlassian.com/doc/confluence-storage-format-790796544.html).
 - [Macro definitions](https://confluence.pnac.org/display/DOC/Confluence+Storage+Format+for+Macros#ConfluenceStorageFormatforMacros-TableofContentsmacro)

@@ -16,8 +16,10 @@ func Render(markdown string) (string, error) {
 	m := mark.New(macroed, nil)
 	// header overwrite to support confluence ToC
 	m.AddRenderFn(mark.NodeHeading, func(node mark.Node) string {
-		h, _ := node.(*mark.HeadingNode)
-		return headerOverwrite(h)
+		return headerOverwriteHeading(node)
+	})
+	m.AddRenderFn(mark.NodeParagraph, func(node mark.Node) string {
+		return headerOverwriteParagraph(node)
 	})
 
 	xhtml := m.Render()

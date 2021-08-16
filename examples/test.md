@@ -39,7 +39,7 @@ or as list
 # markdown stuff
 
 links: 
-- [md2conf](https://github.com/cseeger-epages/markdown2confluence)
+- [md2conf](https://github.com/c-seeger/markdown2confluence)
 
 ## h2 test
 
